@@ -175,6 +175,83 @@
       "source": "{{user `metadata`}}",
       "type": "file"
     },
+
+    {
+      "environment_vars": [],
+      "execute_command": "echo 'vagrant'|{{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+            "scripts/common/metadata.sh",
+            "scripts/common/sshd.sh",
+            "scripts/ubuntu/networking.sh",
+            "scripts/ubuntu/sudoers.sh",
+            "scripts/common/vagrant.sh"
+      ],
+      "type": "shell"
+    },
+
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get install -y curl",
+        "sudo mkdir -p /etc/chef && sudo chown -R vagrant /etc/chef",
+        "curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -v {{user `chef_version`}}",
+        "sudo mkdir -p {{user `chef_dir`}}/cookbooks",
+        "sudo mkdir -p {{user `chef_dir`}}/nodes",
+        "sudo mkdir -p {{user `chef_dir`}}/databags",
+        "sudo mkdir -p {{user `chef_dir`}}/environments",
+        "sudo chown -R vagrant {{user `chef_dir`}}"
+      ]
+    },
+
+    {
+      "type": "file",
+      "source": "{{user `chef_install_cookbook_dir`}}/cookbooks/",
+      "destination": "{{user `chef_dir`}}/cookbooks"
+    },
+
+    {
+      "type": "file",
+      "source": "{{user `chef_install_cookbook_dir`}}/nodes/",
+      "destination": "{{user `chef_dir`}}/nodes"
+    },
+
+    {
+      "type": "file",
+      "source": "{{user `chef_install_cookbook_dir`}}/data_bags/",
+      "destination": "{{user `chef_dir`}}/databags"
+    },
+
+    {
+      "type": "file",
+      "source": "{{user `chef_install_cookbook_dir`}}/environments/",
+      "destination": "{{user `chef_dir`}}/environments"
+    },
+
+    {
+      "type": "file",
+      "source": "{{user `chef_install_cookbook_dir`}}/test/data/secret.txt",
+      "destination": "{{user `chef_dir`}}/encrypted_data_bag_secret"
+    },
+
+    {
+      "type": "file",
+      "source": "{{user `chef_install_cookbook_dir`}}/test/data/secret.txt",
+      "destination": "/etc/chef/encrypted_data_bag_secret"
+    },
+
+    {
+        "type":               "chef-client",
+        "chef_environment":   "{{user `chef_environment`}}",
+        "server_url":         "http://localhost:8889",
+        "config_template":    "templates/client.rb.template",
+        "skip_install":       true,
+        "skip_clean_node":    true,
+        "skip_clean_client":  true,
+        "run_list": [
+          "recipe[revops-common::base]"
+        ]
+    },
+
     {
       "environment_vars": [],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
