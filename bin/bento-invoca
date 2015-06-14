@@ -1,0 +1,15 @@
+#!/bin/bash -ex
+
+pushd ~/src/revops-common
+berks vendor cookbooks
+
+pushd ~/src/bento
+packer build ubuntu-14.04-amd64.json
+vagrant box remove invoca-packer-ubuntu-14.04
+vagrant box add builds/ubuntu-14.04.virtualbox.box --name invoca-packer-ubuntu-14.04
+
+pushd ~/src/revops-common
+bundle exec kitchen destroy common-ubuntu-1404
+bundle exec kitchen converge common-ubuntu-1404
+
+popd
