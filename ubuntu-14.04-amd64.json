@@ -90,7 +90,7 @@
   "inline": [
     "sudo apt-get install -y curl",
     "sudo mkdir -p /etc/chef && sudo chown -R vagrant /etc/chef",
-    "curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -v 11.14.6",
+    "curl -L https://www.chef.io/chef/install.sh | sudo bash -s -- -v {{user `chef_version`}}",
     "sudo mkdir -p {{user `chef_dir`}}/cookbooks",
     "sudo mkdir -p {{user `chef_dir`}}/nodes",
     "sudo mkdir -p {{user `chef_dir`}}/databags",
@@ -162,6 +162,7 @@
   ],
   "variables": {
     "chef_dir": "/tmp/packer-chef-client",
+    "chef_version": "11.14.6",
     "arch": "64",
     "box_basename": "ubuntu-14.04",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
