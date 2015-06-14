@@ -101,37 +101,43 @@
 
 {
   "type": "file",
-  "source": "{{pwd}}/../revops-common/cookbooks/",
+  "source": "{{user `chef_install_cookbook_dir`}}/cookbooks/",
   "destination": "{{user `chef_dir`}}/cookbooks"
 },
 
 {
   "type": "file",
-  "source": "{{pwd}}/../revops-common/nodes/",
+  "source": "{{user `chef_install_cookbook_dir`}}/nodes/",
   "destination": "{{user `chef_dir`}}/nodes"
 },
 
 {
   "type": "file",
-  "source": "{{pwd}}/../revops-common/data_bags/",
+  "source": "{{user `chef_install_cookbook_dir`}}/data_bags/",
   "destination": "{{user `chef_dir`}}/databags"
 },
 
 {
   "type": "file",
-  "source": "{{pwd}}/../revops-common/environments/",
+  "source": "{{user `chef_install_cookbook_dir`}}/environments/",
   "destination": "{{user `chef_dir`}}/environments"
 },
 
 {
   "type": "file",
-  "source": "{{pwd}}/../revops-common/test/data/secret.txt",
+  "source": "{{user `chef_install_cookbook_dir`}}/test/data/secret.txt",
   "destination": "{{user `chef_dir`}}/encrypted_data_bag_secret"
 },
 
 {
+  "type": "file",
+  "source": "{{user `chef_install_cookbook_dir`}}/test/data/secret.txt",
+  "destination": "/etc/chef/encrypted_data_bag_secret"
+},
+
+{
     "type":               "chef-client",
-    "chef_environment":   "test",
+    "chef_environment":   "{{user `chef_environment`}}",
     "server_url":         "http://localhost:8889",
     "config_template":    "templates/client.rb.template",
     "staging_directory":  "{{user `chef_dir`}}",
@@ -163,6 +169,8 @@
   "variables": {
     "chef_dir": "/tmp/packer-chef-client",
     "chef_version": "11.14.6",
+    "chef_install_cookbook_dir": "../revops-common",
+    "chef_environment": "test",
     "arch": "64",
     "box_basename": "ubuntu-14.04",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
