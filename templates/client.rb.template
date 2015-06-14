@@ -8,6 +8,5 @@ data_bag_path     "{{user `chef_dir`}}/data_bags"
 environment_path  "{{user `chef_dir`}}/environments"
 cookbook_path     [ "{{user `chef_dir`}}/cookbooks" ]
 node_name         "packer-ami-build"
-environment       ""{{user `chef_environment}}""
-
+environment       "{{user `chef_environment`}}"
 encrypted_data_bag_secret "{{user `chef_dir`}}/encrypted_data_bag_secret"

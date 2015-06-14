@@ -140,7 +140,6 @@
     "chef_environment":   "{{user `chef_environment`}}",
     "server_url":         "http://localhost:8889",
     "config_template":    "templates/client.rb.template",
-    "staging_directory":  "{{user `chef_dir`}}",
     "skip_install":       true,
     "skip_clean_node":    true,
     "skip_clean_client":  true,
