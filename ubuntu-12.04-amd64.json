@@ -86,6 +86,11 @@
     },
 
     {
+      "inline": ["sudo sed -ie 's/us.archive/archive/' /etc/apt/sources.list"],
+      "type": "shell"
+    },
+
+    {
       "type": "shell",
       "inline": [
         "sudo apt-get install -y curl",
