@@ -1,0 +1,4 @@
+#!/bin/bash -ex
+
+packer build ubuntu-14.04-amd64.json
+packer build ubuntu-12.04-amd64.json
