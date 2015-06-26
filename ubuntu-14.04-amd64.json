@@ -167,7 +167,7 @@
   "variables": {
     "chef_dir": "/tmp/packer-chef-client",
     "chef_version": "11.14.6",
-    "chef_install_cookbook_dir": "../revops-common",
+    "chef_install_cookbook_dir": "/var/lib/jenkins/jobs/cookbook-revops-common/workspace",
     "chef_environment": "test",
     "arch": "64",
     "box_basename": "ubuntu-14.04",
